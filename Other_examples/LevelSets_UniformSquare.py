@@ -1,8 +1,5 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[2]:
-
+# Calculates level sets of the eikonal depth for 
+# the uniform density on the square
 
 import numpy as np
 import scipy as sp
