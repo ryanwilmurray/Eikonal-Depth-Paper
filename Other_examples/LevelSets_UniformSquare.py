@@ -42,9 +42,6 @@ F=np.ones((n,1))
 F[np.nonzero(in_boundary)]=1
 
 
-# In[3]:
-
-
 # Cut-off for the neighborhood graph
 radius=ratio/N
 sigma=0.2
@@ -59,9 +56,6 @@ print('Minimum number of neighbors')
 print(np.min(np.sum(1*(sparse_graph>0),axis=1)))
 print('Maximum number of neighbors')
 print(np.max(np.sum(1*(sparse_graph>0),axis=1)))
-
-
-# In[4]:
 
 
 values = 100*np.ones(n)
@@ -114,9 +108,6 @@ while considered_set:
     considered_set = considered_set.union(update_set)
 
 print("Calculations complete")
-
-
-# In[5]:
 
 
 fig1, ax = plt.subplots()
