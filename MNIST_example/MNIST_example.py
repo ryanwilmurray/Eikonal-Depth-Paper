@@ -1,7 +1,5 @@
-# Generates the MNIST examples in the paper "Eikonal depth: an optimal 
-# control approach to statistical depths" by:
-# Martin Molina-Fructuoso
-# Ryan Murray
+# Calculates the eikonal depth in the set of elements in MNIST
+# corresponding to a certain number
 
 import numpy as np
 import scipy as sp
@@ -17,13 +15,9 @@ labels_dic = np.load("MNIST_labels.npz",allow_pickle=True)
 labels = labels_dic['labels']
 
 
-
-
 # DEN_EST=False : The boundary is the digits with a different label
 # DEN_EST=True : The boundary is defined using density estimation
-DEN_EST=True
-
-
+DEN_EST=False
 
 
 if DEN_EST==False:
@@ -75,8 +69,6 @@ else:
     plt.savefig(fname='boundarysample',bbox_inches='tight',dpi=300)
 
 
-
-
 # F is the inverse of the density
 f=np.ones((n,1))
 F=np.reciprocal(f)
@@ -88,8 +80,6 @@ k=10
 I,J,D = gl.knnsearch_annoy(points,k)
 wght_mat = gl.weight_matrix(I,J,D,k)
 sparse_graph=1*(wght_mat>0) 
-
-
 
 
 values = 100*np.ones(n)
@@ -123,8 +113,7 @@ while considered_set:
     if k%100 == 0:
         print("{:.2f} %".format(k/n*100),end='\r')
     k += 1
-    
-    
+        
     #Letting num_iter be small after some burn-in period.
     if k > 100:
         num_iter = 1
@@ -149,10 +138,7 @@ while considered_set:
     update_set = neighbor_set_list[min_index].difference(solved_set)
     considered_set = considered_set.union(update_set)
 
-
 print("Calculations complete")
-
-
 
 
 n_levels=10
@@ -181,8 +167,7 @@ for i in np.arange(n_levels):
                 if j+k*hist_val < points_atlevel.shape[0]:
                     hist[hist_height*(hist_colwidth+hist_padding)*i+k*hist_height+j,:]=points_atlevel[j+k*hist_val,:]
   
-    
-    
+        
 def hist_show(X,n_rows=10,n_cols=10,padding=2,figname='MNISThist_generic.png', title="MNIST Histogram"):
     n = X.shape[0]
     m = X.shape[1]
@@ -209,7 +194,6 @@ def hist_show(X,n_rows=10,n_cols=10,padding=2,figname='MNISThist_generic.png', t
     plt.tick_params(axis='both', labelsize=10, length = 0)
     plt.xticks(ticks=0.5*(hist_colwidth*28)+((hist_colwidth+hist_padding)*(28+padding))*np.arange(n_levels),labels=np.around(levels[1::],decimals=2))
     plt.savefig(figname,bbox_inches='tight',dpi=300)
-
 
 if DEN_EST==False:
     hist_show(hist,n_rows=hist_height,n_cols=hist_width,padding=1,figname='MNISThist.png',
