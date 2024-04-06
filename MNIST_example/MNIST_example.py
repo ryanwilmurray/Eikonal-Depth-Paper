@@ -21,7 +21,7 @@ DEN_EST=False
 
 
 if DEN_EST==False:
-    print("The boundary was defined as the digits with a different label")
+    print("The boundary was defined as digits with a different label")
     np.random.seed(4)
 
     points_selection=np.random.permutation(70000)
